@@ -1,0 +1,12 @@
+[package]
+name = "lets_find_up"
+license = "MIT"
+version = "0.0.1"
+edition = "2021"
+description = "Find a file or directory by walking up parent directories."
+repository = "https://github.com/iheyunfei/lets_find_up"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+path = { package = "nodejs_path", version = "^0.0.8" }
