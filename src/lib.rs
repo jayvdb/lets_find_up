@@ -48,11 +48,9 @@ pub fn find_up_with<T: AsRef<Path>>(
                         }
                     }
                 }
-            } else {
-                if let Some(file_name) = path.file_name() {
-                    if target_file_name == file_name {
-                        return Ok(Some(path));
-                    }
+            } else if let Some(file_name) = path.file_name() {
+                if target_file_name == file_name {
+                    return Ok(Some(path));
                 }
             }
             target_dir = dir.parent()
