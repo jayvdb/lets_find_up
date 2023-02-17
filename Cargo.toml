@@ -1,10 +1,10 @@
 [package]
 name = "lets_find_up"
 license = "MIT"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 description = "Find a file or directory by walking up parent directories."
-repository = "https://github.com/iheyunfei/lets_find_up"
+repository = "https://github.com/jayvdb/lets_find_up"
 keywords = ["find-up", "find_up", "findup"]
 
 
