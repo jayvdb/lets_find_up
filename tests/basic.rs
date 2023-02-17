@@ -1,4 +1,5 @@
 use std::path::{Path, PathBuf};
+use sugar_path::SugarPath;
 
 use lets_find_up::{FindUpKind, FindUpOptions};
 
@@ -6,7 +7,7 @@ use lets_find_up::{FindUpKind, FindUpOptions};
 fn basic_find_in_current_directory() {
     let left = lets_find_up::find_up("Cargo.toml").unwrap().unwrap();
 
-    let right = path::resolve!(".", "Cargo.toml");
+    let right = Path::new("Cargo.toml").absolutize();
     assert_eq!(left, PathBuf::from(right));
 }
 
@@ -22,7 +23,7 @@ fn find_in_current_directory() {
     .unwrap()
     .unwrap();
 
-    let right = path::resolve!(".", "src");
+    let right = Path::new("src").absolutize();
     assert_eq!(left, PathBuf::from(right));
 }
 
@@ -41,6 +42,6 @@ fn find_in_parent_directory() {
     .unwrap()
     .unwrap();
 
-    let right = path::resolve!(".", "Cargo.lock");
+    let right = Path::new("Cargo.lock").absolutize();
     assert_eq!(left, PathBuf::from(right));
 }
