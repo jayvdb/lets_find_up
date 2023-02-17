@@ -20,7 +20,9 @@ impl<'a> Default for FindUpOptions<'a> {
 }
 
 #[inline]
-/// Find a file by walking up parent directories
+/// Find a file by walking up parent directories from the current directory
+/// when the binary was run. i.e. changing the current directory after startup
+/// has no effect.
 pub fn find_up<T: AsRef<Path>>(file_name: T) -> std::io::Result<Option<PathBuf>> {
     find_up_with(file_name, Default::default())
 }
@@ -35,7 +37,7 @@ pub fn find_up_with<T: AsRef<Path>>(
     let is_search_dir = matches!(options.kind, FindUpKind::Dir);
     let mut target_dir = Some(cwd);
     while let Some(dir) = target_dir {
-        for entry in std::fs::read_dir(cwd)? {
+        for entry in std::fs::read_dir(dir)? {
             let entry = entry?;
             let path = entry.path();
             if path.is_dir() {
