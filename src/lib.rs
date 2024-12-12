@@ -10,7 +10,7 @@ pub struct FindUpOptions<'a> {
     pub kind: FindUpKind,
 }
 
-impl<'a> Default for FindUpOptions<'a> {
+impl Default for FindUpOptions<'_> {
     fn default() -> Self {
         Self {
             cwd: Path::new("."),
@@ -42,7 +42,12 @@ pub fn find_up_with<T: AsRef<Path>>(
     let is_search_dir = matches!(options.kind, FindUpKind::Dir);
 
     while let Some(dir) = target_dir {
-        for entry in std::fs::read_dir(dir)? {
+        let mut dir_iterator = std::fs::read_dir(dir)?.peekable();
+        if dir_iterator.peek().is_none() {
+            target_dir = dir.parent();
+            continue;
+        }
+        for entry in dir_iterator {
             let entry = entry?;
             let path = entry.path();
             if path.is_dir() {
